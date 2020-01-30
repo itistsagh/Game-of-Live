@@ -43,10 +43,10 @@ function setup() {
                 var blue = new Blue(x, y,5);
                BlueArr.push(blue);
             }
-            else if (matrix[y][x] == 4) {
-                var square = new Square(x, y,4);
-                SquareArr.push(square);
-            }
+            // else if (matrix[y][x] == 4) {
+            //     var square = new Square(x, y,4);
+            //     SquareArr.push(square);
+            // }
         }
     }
 
