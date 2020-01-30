@@ -1,3 +1,4 @@
+let LivingCreature=require('./LivingCreature')
 class Eater extends LivingCreature {
     constructor(x, y, index){
         super(x, y, index);

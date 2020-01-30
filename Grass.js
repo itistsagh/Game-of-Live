@@ -1,3 +1,4 @@
+let LivingCreature=require('./LivingCreature')
 class Grass extends LivingCreature {
     mul() {
         this.multiply++;
@@ -15,6 +16,4 @@ class Grass extends LivingCreature {
             this.multiply = 0;
         }
     }
-
-
 }

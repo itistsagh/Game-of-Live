@@ -1,38 +1,25 @@
-
-let LivingCreature=require('./LivingCreature')
-class Blue extends LivingCreature{
-
-    constructor(x, y, index){
-        super(x, y, index);
-        this.energy = 5;
+class Square {
+    constructor(x, y, index) {
+        this.x = x;
+        this.y = y;
+        this.energy = 10;
+        this.index = index;
+        this.directions = [];
     }
-
-
 
     getNewCoordinates() {
+        var i = Math.floor(Math.random(1, 20))
         this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 2, this.y + 2],
-            [this.x - 2, this.y - 2],
-            [this.x, this.y - 2],
-            [this.x + 2, this.y - 2],
-            [this.x - 2, this.y],
-            [this.x + 2, this.y],
-            [this.x - 2, this.y + 2],
-            [this.x, this.y + 2],
-            [this.x + 2, this.y + 2]
+
+            [this.x - i, this.y - i],
+            [this.x + i, this.y + i],
+            [this.x + i, this.y - i],
+            [this.x - i, this.y + i],
+
+
         ];
+
     }
-    chooseCell(character) {
-        this.getNewCoordinates();
-        return super.chooseCell(character);
-    } 
 
     chooseCell2(tiv1, tiv2) {
         this.getNewCoordinates();
@@ -52,6 +39,7 @@ class Blue extends LivingCreature{
         return found;
 
     }
+
     chooseCell3(tiv1, tiv2, tiv3) {
         this.getNewCoordinates();
         let found = [];
@@ -88,7 +76,7 @@ class Blue extends LivingCreature{
             else if (matrix[newY][newX] == 1) {
                 matrix[this.y][this.x] = 1;
                 matrix[newY][newX] = this.index;
-                this.energy-= 2;
+                this.energy--;
             }
             this.y = newY;
             this.x = newX;
@@ -98,12 +86,13 @@ class Blue extends LivingCreature{
     }
 
     eat() {
-        var eater = random(this.chooseCell(2));
+        var eater = random(this.chooseCell3(5,2,3));
         if (eater) {
             var newX = eater[0];
             var newY = eater[1];
             matrix[newY][newX] = this.index;
             matrix[this.y][this.x] = 0;
+     
             for (var i in EaterArr) {
                 if (newX == EaterArr[i].x && newY == EaterArr[i].y) {
                     EaterArr.splice(i, 1);
@@ -114,34 +103,39 @@ class Blue extends LivingCreature{
                 if (newX == GrassEaterArr[i].x && newY == GrassEaterArr[i].y) {
                     GrassEaterArr.splice(i, 1);
                     break;
+                }}
+            for (var i in BlueArr) {
+                    if (newX == BlueArr[i].x && newY == BlueArr[i].y) {
+                        BlueArr.splice(i, 1);
+                        break;
+                    }
                 }
-            }
             this.x = newX;
             this.y = newY;
-            this.energy += 5;
-        }
-    }
-
-    mul() {
-        var newCell = random(this.chooseCell(0))
-        if (newCell && this.energy >= 15) {
-            var blue = new Blue(newCell[0], newCell[1], this.index);
-            BlueArr.push(blue);
-            matrix[newCell[1]][newCell[0]] = this.index;
-            this.energy = 10;
-
-        }
-    }
+            this.energy += 10;
+            
+        }}
 
     die() {
-        if (this.energy <= -5) {
+
+            if (this.energy >=60) {
+                matrix[this.y][this.x] = 0;
+                for (var i in SquareArr) {
+                    if (this.x == SquareArr[i].x && this.y == SquareArr[i].y) {
+                        SquareArr.splice(i, 1)
+                    }
+                
+           
+        }}
+    
+        else if (this.energy <=-10) {
             matrix[this.y][this.x] = 0;
-            for (var i in BlueArr) {
-                if (this.x == BlueArr[i].x && this.y == BlueArr[i].y) {
-                    BlueArr.splice(i, 1)
+            for (var i in SquareArr) {
+                if (this.x == SquareArr[i].x && this.y == SquareArr[i].y) {
+                    SquareArr.splice(i, 1)
                 }
             }
-        }
+    }}
+    
+    
     }
-
-}
